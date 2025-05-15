@@ -8,7 +8,7 @@ export default function ServersScroll() {
         <div className="px-1">
             <div>
                 <ul>
-                    <li className="flex flex-col">
+                    <li>
                         <ServerButton />
                         <ServerButton />
                         <ServerButton />

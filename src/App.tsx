@@ -1,3 +1,4 @@
+import ChannelsPanelScroll from "./components/ChannelsPanelScroll";
 import ServerPanelScroll from "./components/ServerPanelScroll";
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
                     <ServerPanelScroll />
                 </div>
                 <div className="h-screen w-64 bg-gray-800">
-                    <div className="h-full rounded-tl-xl bg-amber-200"></div>
+                    <ChannelsPanelScroll />
                 </div>
                 <div className="flex-1 bg-red-200"></div>
             </div>
