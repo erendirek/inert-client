@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaHashtag } from "react-icons/fa6";
 import MemberCard from "./MemberCard";
 import { useAtom } from "jotai";
@@ -7,8 +7,15 @@ import type { TypeChannel } from "../../types/TypeChannel";
 import axiosInstance from "../../api/axiosInstance";
 import type { TypeChat, TypeChatReponse } from "../../types/TypeChat";
 import ChatMessage from "./ChatMessage";
+import { IoIosSend } from "react-icons/io";
+
+interface SendMessageFormData {
+    message_content: string | null;
+}
 
 export default function ChatPanelScroll() {
+    const messageContentTextAreaRef = useRef<HTMLTextAreaElement>(null);
+
     const [selectedChannel] = useAtom(selectedChannelAtom);
     const [channels] = useAtom(channelsAtom);
     const [currentChannel, setCurrentChannel] = useState<TypeChannel | null>(
@@ -21,7 +28,7 @@ export default function ChatPanelScroll() {
             `/rest/channels/${chan_id}/messages`,
         );
 
-        setMessages([...response.data.messages]);
+        setMessages([...response.data.messages.reverse()]);
     };
 
     useEffect(() => {
@@ -42,6 +49,43 @@ export default function ChatPanelScroll() {
         setCurrentChannel(currChannel);
         setupChatAsync(currChannel.id);
     }, [channels, selectedChannel]);
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const form = new FormData(e.currentTarget);
+
+        const formData: SendMessageFormData = {
+            message_content: form.get("message-content")?.toString() ?? null,
+        };
+
+        if (!formData.message_content || formData.message_content?.length <= 0)
+            return;
+
+        axiosInstance.post(`/rest/channels/${selectedChannel}/messages`, {
+            content: formData.message_content,
+        });
+
+        if (messageContentTextAreaRef && messageContentTextAreaRef.current) {
+            messageContentTextAreaRef.current.value = "";
+        }
+    };
+
+    const handleOnChangeMessageContentTextArea = (
+        e: React.ChangeEvent<HTMLTextAreaElement>,
+    ) => {
+        const max_height = 120;
+        if (e.currentTarget.scrollHeight <= max_height)
+            e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+    };
+
+    // const handleOnKeyDownMessageContentTextArea = (
+    //     e: React.KeyboardEvent<HTMLTextAreaElement>,
+    // ) => {
+    //     if (e.key == "Enter" && !e.shiftKey) {
+    //         e.currentTarget.closest("form")?.submit();
+    //     }
+    // };
 
     return (
         <div className="flex h-full">
@@ -68,9 +112,33 @@ export default function ChatPanelScroll() {
                             );
                         })}
                     </div>
-                    <div className="h-24 w-full p-2">
-                        <div className="bg-palette-3 h-full w-full rounded-md">
-                            asdfdsa
+                    <div className="h-min-24 w-full p-2">
+                        <div className="bg-palette-3 h-full w-full rounded-md px-4 py-2">
+                            <form action="/" onSubmit={handleOnSubmit}>
+                                <textarea
+                                    className="text-white-2 w-full resize-none outline-0"
+                                    name="message-content"
+                                    onChange={
+                                        handleOnChangeMessageContentTextArea
+                                    }
+                                    ref={messageContentTextAreaRef}
+                                    placeholder="type something..."
+                                ></textarea>
+
+                                <div className="flex h-8 justify-between">
+                                    <div className="flex gap-x-2">
+                                        <div>b1</div>
+                                        <div>b2</div>
+                                        <div>b2</div>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="text-white-2 cursor-pointer"
+                                    >
+                                        <IoIosSend className="text-xl" />
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

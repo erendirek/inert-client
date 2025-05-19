@@ -18,8 +18,8 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-        localStorage.removeItem(token_key);
         if (error.response?.status == axios.HttpStatusCode.Unauthorized) {
+            localStorage.removeItem(token_key);
             window.location.href = "/login";
         }
         return error;

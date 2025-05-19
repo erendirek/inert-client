@@ -1,9 +1,15 @@
-import React from "react";
 import ServerPanelScroll from "../components/ServerPanelScroll/ServerPanelScroll";
 import ChatPanelScroll from "../components/ChatPanelScroll/ChatPanelScroll";
 import ChannelsPanelScroll from "../components/ChannelsPanelScroll/ChannelsPanelScroll";
 
 export default function MainPage() {
+    // const getUserInfo = async (): Promise<AxiosResponse<TypeUser, unknown>> => {
+    //     const response = axiosInstance.get<TypeUser>(`/rest/auth/me`);
+    //     return response;
+    // };
+
+    // const me = use(getUserInfo());
+
     return (
         <div className="root flex h-screen flex-col">
             <div className="bg-palette-1 h-12"></div>
