@@ -24,15 +24,15 @@ export default function ChatMessage(states: ChatMessageState) {
 
     return (
         <div className="flex flex-col p-2">
-            <div className="flex items-end gap-x-2">
+            <div className="flex items-center gap-x-2">
                 <p className="text-white-2 font-semibold">
                     {states.author_name}
                 </p>
-                <p className="text-sm text-black">
+                <p className="text-white-2/50 text-xs font-thin">
                     {parseDate(states.created_at)}
                 </p>
             </div>
-            <p className="text-white-2/80">{states.message}</p>
+            <p className="text-white-2/80 wrap-anywhere">{states.message}</p>
         </div>
     );
 }

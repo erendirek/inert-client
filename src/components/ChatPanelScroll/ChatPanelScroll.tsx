@@ -92,27 +92,30 @@ export default function ChatPanelScroll() {
             <div id="chat" className="flex h-full flex-1 flex-col">
                 <div
                     id="chat-header"
-                    className="text-white-2 flex h-12 items-center gap-x-1 pl-4"
+                    className="text-white-2 flex h-12 items-center gap-x-1 py-2 pl-4"
                 >
                     <FaHashtag />
                     <p className="font-bold">
                         {currentChannel ? currentChannel.name : "NA"}
                     </p>
                 </div>
-                <div id="chat-inner" className="flex h-full flex-1 flex-col">
-                    <div className="flex flex-1 flex-col justify-end px-2">
+                <div
+                    id="chat-inner"
+                    className="flex h-[calc(100%-3rem)] flex-col"
+                >
+                    <div className="flex flex-1 flex-col justify-end overflow-scroll px-2">
                         {messages?.map((elem, index) => {
                             return (
                                 <ChatMessage
                                     key={index}
                                     message={elem.content}
-                                    author_name={elem.author_id}
+                                    author_name={elem.username}
                                     created_at={elem.created_at}
                                 />
                             );
                         })}
                     </div>
-                    <div className="h-min-24 w-full p-2">
+                    <div className="h-auto w-full p-2">
                         <div className="bg-palette-3 h-full w-full rounded-md px-4 py-2">
                             <form action="/" onSubmit={handleOnSubmit}>
                                 <textarea

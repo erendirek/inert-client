@@ -5,6 +5,9 @@ export interface TypeChat {
     content: string;
     created_at: string;
     edited_at: string | null;
+    deleted: boolean;
+    username: string;
+    email: string;
 }
 
 export interface TypeChatReponse {

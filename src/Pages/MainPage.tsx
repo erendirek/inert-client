@@ -11,9 +11,9 @@ export default function MainPage() {
     // const me = use(getUserInfo());
 
     return (
-        <div className="root flex h-screen flex-col">
+        <div id="root" className="flex h-screen max-h-screen flex-col">
             <div className="bg-palette-1 h-12"></div>
-            <div className="flex flex-1">
+            <div className="flex h-[calc(100vh-3rem)] max-h-[calc(100vh-3rem)]">
                 <div className="relative flex">
                     <div className="bg-palette-1 h-full w-20">
                         <ServerPanelScroll />
